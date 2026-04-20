@@ -5,11 +5,13 @@ import StatusChart from './components/StatusChart';
 import ProgressChart from './components/ProgressChart';
 import { useTasks } from './hooks/useTasks';
 import { useTaskSearch } from './hooks/useTaskSearch';
+import { useTheme } from './hooks/useTheme';
 import './App.css';
 
 export default function App() {
   const { tasks, addTask, updateStatus, removeTask } = useTasks();
   const { query, setQuery, filter, setFilter, filteredTasks } = useTaskSearch(tasks);
+  const { theme, toggleTheme } = useTheme();
   const hasTasks = tasks.length > 0;
   const emptyMessage = hasTasks
     ? 'Nenhuma tarefa encontrada para a busca.'
@@ -18,8 +20,18 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>📋 Todo App</h1>
-        <p>Gerencie suas tarefas e acompanhe o progresso em gráficos.</p>
+        <div className="app-header-text">
+          <h1>📋 Todo App</h1>
+          <p>Gerencie suas tarefas e acompanhe o progresso em gráficos.</p>
+        </div>
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={`Alternar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}
+        >
+          {theme === 'light' ? '🌙 Escuro' : '☀️ Claro'}
+        </button>
       </header>
 
       <main className="app-main">
